@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-
 import com.noel.sung.library_npattern_permissionhelper.PermissionHelper;
 
 
@@ -72,8 +71,6 @@ public abstract class BasePermissionFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        boolean isReject = grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED;
-        PermissionHelper.getInstance().onFragmentRequestPermissionsResult(this,permissions,isReject,requestCode);
+        PermissionHelper.getInstance().onRequestPermissionsResult(this, requestCode,permissions,grantResults);
     }
 }

@@ -1,6 +1,7 @@
 package com.noel.sung.demo_permissionhelper;
 
 import android.Manifest;
+import android.content.pm.PermissionInfo;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,11 +28,11 @@ public class MainFragment extends BasePermissionFragment {
 
     @Override
     protected void init(ViewDataBinding dataBinding) {
-        MainFragmentBinding mainFragmentBinding = (MainFragmentBinding)dataBinding;
+        MainFragmentBinding mainFragmentBinding = (MainFragmentBinding) dataBinding;
         mainFragmentBinding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PermissionHelper.getInstance().startWithPermissionCheck(MainFragment.this,EVENT_WHATEVER_YOU_WANT_2);
+                PermissionHelper.getInstance().startWithPermissionCheck(MainFragment.this, EVENT_WHATEVER_YOU_WANT_2);
             }
         });
     }
@@ -44,12 +45,12 @@ public class MainFragment extends BasePermissionFragment {
 
 
     @DeniedPermission(targetEvent = EVENT_WHATEVER_YOU_WANT_2)
-    private void deniedPermission(){
+    private void deniedPermission() {
         Toast.makeText(activity, "你拒絕了EVENT_WHATEVER_YOU_WANT_2", Toast.LENGTH_SHORT).show();
     }
 
     @NeverAskPermission(targetEvent = EVENT_WHATEVER_YOU_WANT_2)
-    private void neverAskAgainPermission(){
+    private void neverAskAgainPermission() {
         Toast.makeText(activity, "你不再提醒EVENT_WHATEVER_YOU_WANT_2", Toast.LENGTH_SHORT).show();
     }
 }

@@ -33,7 +33,7 @@ public class MainActivity extends BasePermissionActivity {
         });
     }
 
-    @ObtainPermission(targetEvent = EVENT_WHATEVER_YOU_WANT, permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CAMERA})
+    @ObtainPermission(targetEvent = EVENT_WHATEVER_YOU_WANT, permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA})
     private void gotoFragment() {
         mainActivityBinding.button.setVisibility(View.GONE);
         replaceFragment(R.id.frame_layout, new MainFragment(), false);
