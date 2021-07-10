@@ -53,7 +53,7 @@ public abstract class BasePermissionActivity extends FragmentActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionHelper.getInstance().onRequestPermissionsResult(this, requestCode,permissions,grantResults);
+        PermissionHelper.getInstance().onRequestPermissionsResult(this,permissions,grantResults);
     }
 
 }

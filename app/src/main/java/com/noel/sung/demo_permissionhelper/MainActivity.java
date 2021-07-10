@@ -8,9 +8,7 @@ import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 
 import com.noel.sung.demo_permissionhelper.databinding.MainActivityBinding;
-import com.noel.sung.library_npattern_permissionhelper.DeniedPermission;
-import com.noel.sung.library_npattern_permissionhelper.NeverAskPermission;
-import com.noel.sung.library_npattern_permissionhelper.ObtainPermission;
+import com.noel.sung.library_npattern_permissionhelper.OnPermissionStateListener;
 import com.noel.sung.library_npattern_permissionhelper.PermissionHelper;
 
 
@@ -19,7 +17,6 @@ import com.noel.sung.library_npattern_permissionhelper.PermissionHelper;
  */
 public class MainActivity extends BasePermissionActivity {
 
-    private final int EVENT_WHATEVER_YOU_WANT = 123;
     private MainActivityBinding mainActivityBinding;
 
     @Override
@@ -28,25 +25,33 @@ public class MainActivity extends BasePermissionActivity {
         mainActivityBinding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PermissionHelper.getInstance().startWithPermissionCheck(MainActivity.this, EVENT_WHATEVER_YOU_WANT);
+                PermissionHelper.getInstance().startWithPermissionCheck(MainActivity.this, new OnPermissionStateListener() {
+                    @Override
+                    public String[] obtainPermissions() {
+                        return new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA};
+                    }
+
+                    @Override
+                    public void onAcceptPermission() {
+                        mainActivityBinding.button.setVisibility(View.GONE);
+                        replaceFragment(R.id.frame_layout, new MainFragment(), false);
+                    }
+
+                    @Override
+                    public void onRejectPermission() {
+                        Toast.makeText(MainActivity.this, "你拒絕了EVENT_WHATEVER_YOU_WANT", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onNeverAskAgainPermission() {
+                        Toast.makeText(MainActivity.this, "你不再提醒EVENT_WHATEVER_YOU_WANT", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
     }
 
-    @ObtainPermission(targetEvent = EVENT_WHATEVER_YOU_WANT, permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA})
-    private void gotoFragment() {
-        mainActivityBinding.button.setVisibility(View.GONE);
-        replaceFragment(R.id.frame_layout, new MainFragment(), false);
-    }
-
-    @DeniedPermission(targetEvent = EVENT_WHATEVER_YOU_WANT)
-    private void deniedPermission() {
-        Toast.makeText(this, "你拒絕了EVENT_WHATEVER_YOU_WANT", Toast.LENGTH_SHORT).show();
-    }
-
-    @NeverAskPermission(targetEvent = EVENT_WHATEVER_YOU_WANT)
-    private void neverAskAgainPermission() {
-        Toast.makeText(this, "你不再提醒EVENT_WHATEVER_YOU_WANT", Toast.LENGTH_SHORT).show();
-    }
 
 }
